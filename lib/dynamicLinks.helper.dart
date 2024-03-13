@@ -28,7 +28,7 @@ class DynamicLinksHelper {
   }) async {
     // define url as payload
     Uri url;
-
+    print(Uri.parse('$appWebsiteUrl/$path?$params'));
     // initialize a dynamic link
     final DynamicLinkParameters parameters = DynamicLinkParameters(
       uriPrefix: uriPrefix,
