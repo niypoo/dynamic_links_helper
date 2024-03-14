@@ -35,10 +35,12 @@ class DynamicLinksHelper {
       link: Uri.parse('$appWebsiteUrl/$path?$params'),
       androidParameters: AndroidParameters(
         packageName: bundleId,
+        minimumVersion: 0,
       ),
       iosParameters: IOSParameters(
         bundleId: bundleId,
         appStoreId: appStoreIdentifier,
+        minimumVersion: '0',
       ),
       socialMetaTagParameters: SocialMetaTagParameters(
         title: socialTitle,
