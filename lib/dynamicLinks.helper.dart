@@ -28,18 +28,17 @@ class DynamicLinksHelper {
   }) async {
     // define url as payload
     Uri url;
-
+print('$appWebsiteUrl/$path?$params');
     // initialize a dynamic link
     final DynamicLinkParameters parameters = DynamicLinkParameters(
       uriPrefix: uriPrefix,
       link: Uri.parse('$appWebsiteUrl/$path?$params'),
       androidParameters: AndroidParameters(
         packageName: bundleId,
-        minimumVersion: 0,
       ),
       iosParameters: IOSParameters(
         bundleId: bundleId,
-        appStoreId: appStoreIdentifier,
+        // appStoreId: appStoreIdentifier,
         minimumVersion: '0',
       ),
       socialMetaTagParameters: SocialMetaTagParameters(
@@ -50,15 +49,14 @@ class DynamicLinksHelper {
     );
 
     // build link as short or normal
-    url = await FirebaseDynamicLinks.instance.buildLink(parameters);
-    // if (shortLink) {
-    //   final ShortDynamicLink shortenedLink =
-    //       await FirebaseDynamicLinks.instance.buildShortLink(parameters);
+    if (shortLink) {
+      final ShortDynamicLink shortenedLink =
+          await FirebaseDynamicLinks.instance.buildShortLink(parameters);
 
-    //   url = shortenedLink.shortUrl;
-    // } else {
-    //   url = await FirebaseDynamicLinks.instance.buildLink(parameters);
-    // }
+      url = shortenedLink.shortUrl;
+    } else {
+      url = await FirebaseDynamicLinks.instance.buildLink(parameters);
+    }
 
     // return payload
     return url;
