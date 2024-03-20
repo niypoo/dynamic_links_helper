@@ -23,7 +23,7 @@ class DynamicLinksHelper {
     required String path,
     required String socialTitle,
     required String socialDescription,
-    String? params,
+    Map<String, dynamic>? queryParameters,
     bool shortLink = true,
   }) async {
     // define url as payload
@@ -34,7 +34,11 @@ class DynamicLinksHelper {
     // initialize a dynamic link
     final DynamicLinkParameters parameters = DynamicLinkParameters(
       uriPrefix: uriPrefix,
-      link: Uri.parse('$appWebsiteUrl/$path?$params'),
+      link: Uri(
+        host: appWebsiteUrl,
+        path: path,
+        queryParameters: queryParameters,
+      ),
       androidParameters: AndroidParameters(
         packageName: bundleId,
         minimumVersion: 0,
