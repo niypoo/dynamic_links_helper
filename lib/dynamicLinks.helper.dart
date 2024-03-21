@@ -16,7 +16,7 @@ class DynamicLinksHelper {
   // create link
   static Future<Uri> create({
     required String uriPrefix,
-    required String appWebsiteUrl,
+    required String domain,
     required String bundleId,
     required String appStoreIdentifier,
     required String socialImage,
@@ -32,7 +32,7 @@ class DynamicLinksHelper {
     // initialize a dynamic link
     final DynamicLinkParameters parameters = DynamicLinkParameters(
       uriPrefix: uriPrefix,
-      link: Uri.https(appWebsiteUrl, path, queryParameters),
+      link: Uri.https(domain, path, queryParameters),
       androidParameters: AndroidParameters(
         packageName: bundleId,
         minimumVersion: 0,
