@@ -5,9 +5,9 @@ abstract class DynamicLinkServiceHandler {
   void handler(PendingDynamicLinkData? dynamicLink);
 
   // Get Path
-  String getPath(PendingDynamicLinkData dynamicLink) => dynamicLink.link.path;
+  String? getPath(PendingDynamicLinkData dynamicLink) => dynamicLink.link.path;
 
   // Get Params
-  Map<String, String> getParams(PendingDynamicLinkData dynamicLink) =>
+  Map<String, String>? getParams(PendingDynamicLinkData dynamicLink) =>
       dynamicLink.link.queryParameters;
 }
