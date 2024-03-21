@@ -28,17 +28,14 @@ class DynamicLinksHelper {
   }) async {
     // define url as payload
     Uri url;
+    
     print('appStoreIdentifier $appStoreIdentifier');
     print('bundleId $bundleId');
 
     // initialize a dynamic link
     final DynamicLinkParameters parameters = DynamicLinkParameters(
       uriPrefix: uriPrefix,
-      link: Uri(
-        host: appWebsiteUrl,
-        path: path,
-        queryParameters: queryParameters,
-      ),
+      link: Uri.https(appWebsiteUrl, path, queryParameters),
       androidParameters: AndroidParameters(
         packageName: bundleId,
         minimumVersion: 0,
