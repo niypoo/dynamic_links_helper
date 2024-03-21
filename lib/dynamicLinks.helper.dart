@@ -28,9 +28,6 @@ class DynamicLinksHelper {
   }) async {
     // define url as payload
     Uri url;
-    
-    print('appStoreIdentifier $appStoreIdentifier');
-    print('bundleId $bundleId');
 
     // initialize a dynamic link
     final DynamicLinkParameters parameters = DynamicLinkParameters(
@@ -61,7 +58,7 @@ class DynamicLinksHelper {
     } else {
       url = await FirebaseDynamicLinks.instance.buildLink(parameters);
     }
-    print('bundleId $url ${url.toString()}');
+
     // return payload
     return url;
   }
