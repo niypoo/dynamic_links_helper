@@ -1,13 +1,11 @@
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
-
 abstract class DynamicLinkServiceHandler {
   // abstract
   void handler(Uri? dynamicLink);
 
   // Get Path
-  String? getPath(PendingDynamicLinkData dynamicLink) => dynamicLink.link.path;
+  String? getPath(Uri dynamicLink) => dynamicLink.path;
 
   // Get Params
-  Map<String, String>? getParams(PendingDynamicLinkData dynamicLink) =>
-      dynamicLink.link.queryParameters;
+  Map<String, String>? getParams(Uri dynamicLink) =>
+      dynamicLink.queryParameters;
 }

@@ -9,8 +9,7 @@ class DynamicLinksHelper {
     required DynamicLinkServiceHandler handler,
   }) async {
     // Listen to dynamic (app has opened)
-    _appLinks.uriLinkStream.listen(handler.handler)
-    .onError((error) {
+    _appLinks.uriLinkStream.listen(handler.handler).onError((error) {
       print('Dynamic Link Handler $error');
     });
 
@@ -21,11 +20,11 @@ class DynamicLinksHelper {
   // create link
   static Future<Uri> create({
     required String domain,
+    String? path,
     Map<String, dynamic>? queryParameters,
   }) async {
-
     // define url as payload
-    Uri url = Uri(scheme: domain ,queryParameters:queryParameters);
+    Uri url = Uri(scheme: domain, path: path, queryParameters: queryParameters);
 
     // return payload
     return url;
