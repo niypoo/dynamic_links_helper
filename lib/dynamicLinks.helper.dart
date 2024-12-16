@@ -19,12 +19,18 @@ class DynamicLinksHelper {
 
   // create link
   static Future<Uri> create({
-    required String domain,
+    required String host,
     String? path,
     Map<String, dynamic>? queryParameters,
+    String scheme = 'https',
   }) async {
     // define url as payload
-    Uri url = Uri(scheme: domain, path: path, queryParameters: queryParameters);
+    Uri url = Uri(
+      scheme: 'https',
+      host: host,
+      path: path,
+      queryParameters: queryParameters,
+    );
 
     // return payload
     return url;
