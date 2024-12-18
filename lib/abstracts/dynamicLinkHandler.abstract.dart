@@ -3,9 +3,9 @@ abstract class DynamicLinkServiceHandler {
   void handler(Map<dynamic, dynamic>? dynamicLink);
 
   // Get Path
-  String? getPath(Uri dynamicLink) => dynamicLink.path;
+  String? getPath(Map<dynamic, dynamic> dynamicLink) => dynamicLink['path'];
 
   // Get Params
-  Map<String, String>? getParams(Uri dynamicLink) =>
-      dynamicLink.queryParameters;
+  Map<String, String>? getParams(Map<dynamic, dynamic> dynamicLink) =>
+      dynamicLink['queryParameters'];
 }
