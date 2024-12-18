@@ -32,17 +32,13 @@ class DynamicLinksHelper {
 
   // create link
   static Future<String?> create({
-    required String uriPrefix,
-    required String domain,
-    required String bundleId,
-    required String appStoreIdentifier,
+    required String identifier,
     required String imageUrl,
     required String path,
     required String title,
     required String description,
     required List<String> keywords,
     Map<String, dynamic>? queryParameters,
-    bool shortLink = true,
   }) async {
     // payload link
     String? payload;
@@ -50,7 +46,7 @@ class DynamicLinksHelper {
     // Create content reference
     //To Setup Data For Generation Of Deep Link
     BranchUniversalObject buo = BranchUniversalObject(
-      canonicalIdentifier: bundleId,
+      canonicalIdentifier: identifier,
       title: title,
       imageUrl: imageUrl,
       contentDescription: description,
@@ -63,6 +59,8 @@ class DynamicLinksHelper {
 
     // Inject queryParameters
     BranchLinkProperties lp = BranchLinkProperties();
+    lp.addControlParam('path', path);
+    // Extra
     if (queryParameters != null && queryParameters.isNotEmpty) {
       queryParameters.forEach((k, v) => lp.addControlParam(k, v));
     }
