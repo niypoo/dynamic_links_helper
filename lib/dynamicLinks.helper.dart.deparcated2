@@ -1,0 +1,38 @@
+// import 'package:dynamic_links_helper/abstracts/dynamicLinkHandler.abstract.dart';
+// import 'package:app_links/app_links.dart';
+
+// class DynamicLinksHelper {
+//   static final _appLinks = AppLinks();
+
+//   // Initialization
+//   static Future<void> init({
+//     required DynamicLinkServiceHandler handler,
+//   }) async {
+//     // Listen to dynamic (app has opened)
+//     _appLinks.uriLinkStream.listen(handler.handler).onError((error) {
+//       print('Dynamic Link Handler $error');
+//     });
+
+//     // Try to get initial value (app just open)
+//     handler.handler(await _appLinks.getInitialLink());
+//   }
+
+//   // create link
+//   static Future<Uri> create({
+//     required String host,
+//     String? path,
+//     Map<String, dynamic>? queryParameters,
+//     String scheme = 'https',
+//   }) async {
+//     // define url as payload
+//     Uri url = Uri(
+//       scheme: 'https',
+//       host: host,
+//       path: path,
+//       queryParameters: queryParameters,
+//     );
+
+//     // return payload
+//     return url;
+//   }
+// }

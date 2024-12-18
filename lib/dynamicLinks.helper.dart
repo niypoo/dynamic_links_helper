@@ -1,38 +1,79 @@
+import 'dart:async';
 import 'package:dynamic_links_helper/abstracts/dynamicLinkHandler.abstract.dart';
-import 'package:app_links/app_links.dart';
+import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
 
 class DynamicLinksHelper {
-  static final _appLinks = AppLinks();
-
   // Initialization
   static Future<void> init({
     required DynamicLinkServiceHandler handler,
   }) async {
-    // Listen to dynamic (app has opened)
-    _appLinks.uriLinkStream.listen(handler.handler).onError((error) {
-      print('Dynamic Link Handler $error');
+    // // Try to get initial value (app just open)
+    // handler.handler(await FirebaseDynamicLinks.instance.getInitialLink());
+    // // Listen to dynamic (app has opened)
+    // FirebaseDynamicLinks.instance.onLink.listen(
+    //     (PendingDynamicLinkData dynamicLink) => handler.handler(dynamicLink));
+
+    FlutterBranchSdk.listSession().listen((data) {
+      print('Custom string 1 : $data');
+      if (data.containsKey("+clicked_branch_link") &&
+          data["+clicked_branch_link"] == true) {
+        //Link clicked. Add logic to get link data
+        print('Custom string 2: $data');
+      }
+    }, onError: (error) {
+      print('listSession error: ${error.toString()}');
     });
 
-    // Try to get initial value (app just open)
-    handler.handler(await _appLinks.getInitialLink());
+    Map<dynamic, dynamic> params =
+        await FlutterBranchSdk.getFirstReferringParams();
+
+    print('Custom string 3: ${params}');
   }
 
   // create link
-  static Future<Uri> create({
-    required String host,
-    String? path,
+  static Future<String?> create({
+    required String uriPrefix,
+    required String domain,
+    required String bundleId,
+    required String appStoreIdentifier,
+    required String imageUrl,
+    required String path,
+    required String title,
+    required String description,
+    required List<String> keywords,
     Map<String, dynamic>? queryParameters,
-    String scheme = 'https',
+    bool shortLink = true,
   }) async {
-    // define url as payload
-    Uri url = Uri(
-      scheme: 'https',
-      host: host,
-      path: path,
-      queryParameters: queryParameters,
+    // payload link
+    String? payload;
+
+    // Create content reference
+    //To Setup Data For Generation Of Deep Link
+    BranchUniversalObject buo = BranchUniversalObject(
+      canonicalIdentifier: bundleId,
+      title: title,
+      imageUrl: imageUrl,
+      contentDescription: description,
+      keywords: keywords,
+      publiclyIndex: true,
+      locallyIndex: true,
+      contentMetadata: BranchContentMetaData()
+        ..addCustomMetadata('title', title),
     );
 
+    // Inject queryParameters
+    BranchLinkProperties lp = BranchLinkProperties();
+    if (queryParameters != null && queryParameters.isNotEmpty) {
+      queryParameters.forEach((k, v) => lp.addControlParam(k, v));
+    }
+
+    BranchResponse response =
+        await FlutterBranchSdk.getShortUrl(buo: buo, linkProperties: lp);
+    if (response.success) {
+      payload = response.result;
+    }
+
     // return payload
-    return url;
+    return payload;
   }
 }

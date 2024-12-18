@@ -9,8 +9,9 @@ dependencies:
   flutter:
     sdk: flutter
 
-  firebase_dynamic_links: ^6.0.11
-  app_links: ^6.3.3
+  # firebase_dynamic_links: ^6.0.11
+  # app_links: ^6.3.3
+  flutter_branch_sdk: ^8.2.0
 
 dev_dependencies:
   flutter_test:
