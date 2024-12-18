@@ -13,7 +13,7 @@ abstract class DynamicLinkServiceHandler {
   }
 
   // Get Params
-  Map<String, String>? getParams(Map<dynamic, dynamic>? dynamicLink) {
+  Map<String, dynamic>? getParams(Map<dynamic, dynamic>? dynamicLink) {
     // skip
     if (dynamicLink == null || !dynamicLink.containsKey('queryParameters')) return null;
     // return payload
