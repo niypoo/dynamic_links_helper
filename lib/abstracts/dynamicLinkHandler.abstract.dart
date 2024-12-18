@@ -15,7 +15,7 @@ abstract class DynamicLinkServiceHandler {
   // Get Params
   Map<String, dynamic>? getParams(Map<dynamic, dynamic>? dynamicLink) {
     // skip
-    if (dynamicLink == null || !dynamicLink.containsKey('queryParameters')) return null;
+    if (dynamicLink == null || !dynamicLink.containsKey('queryParameters') || dynamicLink['queryParameters'].runtimeType != String) return null;
     // return payload
     return jsonDecode(dynamicLink['queryParameters']);
   }
