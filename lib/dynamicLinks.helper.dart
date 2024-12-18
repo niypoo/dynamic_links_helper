@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:dynamic_links_helper/abstracts/dynamicLinkHandler.abstract.dart';
 import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
 
@@ -53,7 +54,7 @@ class DynamicLinksHelper {
     // Inject queryParameters
     BranchLinkProperties lp = BranchLinkProperties();
     lp.addControlParam('path', path);
-    lp.addControlParam('queryParameters', queryParameters);
+    lp.addControlParam('queryParameters', jsonEncode(queryParameters));
 
     BranchResponse response =
         await FlutterBranchSdk.getShortUrl(buo: buo, linkProperties: lp);

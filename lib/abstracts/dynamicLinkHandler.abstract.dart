@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 abstract class DynamicLinkServiceHandler {
   // abstract
   void handler(Map<dynamic, dynamic>? dynamicLink);
@@ -15,6 +17,6 @@ abstract class DynamicLinkServiceHandler {
     // skip
     if (dynamicLink == null || !dynamicLink.containsKey('queryParameters')) return null;
     // return payload
-    return Map.from((dynamicLink['queryParameters']));
+    return jsonDecode(dynamicLink['queryParameters']);
   }
 }
