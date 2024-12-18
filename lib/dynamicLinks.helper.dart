@@ -8,31 +8,21 @@ class DynamicLinksHelper {
     required DynamicLinkServiceHandler handler,
     bool test = true,
   }) async {
-
-
+    // init branch sdk
     await FlutterBranchSdk.init(enableLogging: test, disableTracking: test);
 
     // // Try to get initial value (app just open)
-    // handler.handler(await FirebaseDynamicLinks.instance.getInitialLink());
+    handler.handler(await FlutterBranchSdk.getFirstReferringParams());
     // // Listen to dynamic (app has opened)
-    // FirebaseDynamicLinks.instance.onLink.listen(
-    //     (PendingDynamicLinkData dynamicLink) => handler.handler(dynamicLink));
 
     FlutterBranchSdk.listSession().listen((data) {
-      print('Custom string 1 : $data');
-      if (data.containsKey("+clicked_branch_link") &&
-          data["+clicked_branch_link"] == true) {
-        //Link clicked. Add logic to get link data
-        print('Custom string 2: $data');
-      }
-    }, onError: (error) {
-      print('listSession error: ${error.toString()}');
+      // skip
+      if (!data.containsKey("+clicked_branch_link") ||
+          data["+clicked_branch_link"] != true) return;
+
+      //Link clicked. Add logic to get link data
+      handler.handler(data);
     });
-
-    Map<dynamic, dynamic> params =
-        await FlutterBranchSdk.getFirstReferringParams();
-
-    print('Custom string 3: ${params}');
   }
 
   // create link
@@ -45,8 +35,6 @@ class DynamicLinksHelper {
     required List<String> keywords,
     Map<String, dynamic>? queryParameters,
   }) async {
-    // payload link
-    String? payload;
 
     // Create content reference
     //To Setup Data For Generation Of Deep Link
@@ -65,18 +53,14 @@ class DynamicLinksHelper {
     // Inject queryParameters
     BranchLinkProperties lp = BranchLinkProperties();
     lp.addControlParam('path', path);
-    // Extra
-    if (queryParameters != null && queryParameters.isNotEmpty) {
-      queryParameters.forEach((k, v) => lp.addControlParam(k, v));
-    }
+    lp.addControlParam('queryParameters', queryParameters);
 
     BranchResponse response =
         await FlutterBranchSdk.getShortUrl(buo: buo, linkProperties: lp);
-    if (response.success) {
-      payload = response.result;
-    }
+
+    if (!response.success) return null;
 
     // return payload
-    return payload;
+    return response.result;
   }
 }
