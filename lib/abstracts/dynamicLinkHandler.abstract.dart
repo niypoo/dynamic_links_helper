@@ -1,6 +1,6 @@
 abstract class DynamicLinkServiceHandler {
   // abstract
-  void handler(Uri? dynamicLink);
+  void handler(Map<dynamic, dynamic>? dynamicLink);
 
   // Get Path
   String? getPath(Uri dynamicLink) => dynamicLink.path;
