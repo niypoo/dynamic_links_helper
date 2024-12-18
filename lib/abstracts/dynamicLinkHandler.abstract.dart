@@ -6,6 +6,6 @@ abstract class DynamicLinkServiceHandler {
   String? getPath(Map<dynamic, dynamic> dynamicLink) => dynamicLink['path'];
 
   // Get Params
-  Map<String, String>? getParams(Map<dynamic, dynamic> dynamicLink) =>
-      dynamicLink['queryParameters'];
+  Map<String, String> getParams(Map<dynamic, dynamic> dynamicLink) =>
+      Map.from((dynamicLink['queryParameters'] ?? ''));
 }
