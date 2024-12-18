@@ -6,7 +6,12 @@ class DynamicLinksHelper {
   // Initialization
   static Future<void> init({
     required DynamicLinkServiceHandler handler,
+    bool test = true,
   }) async {
+
+
+    await FlutterBranchSdk.init(enableLogging: test, disableTracking: test);
+
     // // Try to get initial value (app just open)
     // handler.handler(await FirebaseDynamicLinks.instance.getInitialLink());
     // // Listen to dynamic (app has opened)
