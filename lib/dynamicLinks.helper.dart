@@ -33,10 +33,9 @@ class DynamicLinksHelper {
     required String path,
     required String title,
     required String description,
-    required List<String> keywords,
+    List<String> keywords = const [],
     Map<String, dynamic>? queryParameters,
   }) async {
-
     // Create content reference
     //To Setup Data For Generation Of Deep Link
     BranchUniversalObject buo = BranchUniversalObject(
@@ -47,8 +46,6 @@ class DynamicLinksHelper {
       keywords: keywords,
       publiclyIndex: true,
       locallyIndex: true,
-      contentMetadata: BranchContentMetaData()
-        ..addCustomMetadata('title', title),
     );
 
     // Inject queryParameters
